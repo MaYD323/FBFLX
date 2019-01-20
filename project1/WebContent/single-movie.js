@@ -39,13 +39,15 @@ function getParameterByName(target) {
 function handleResult(resultData) {
 
     console.log("handleResult: populating star info from resultData");
+    let backElement = jQuery("#movie_list");
+    backElement.append("<p>"+'<a href="movies.html">'+"</a></p>");
 
 
-    let starInfoElement = jQuery("#movie_info");
+    let movieInfoElement = jQuery("#movie_info");
 
 
     let inf = "<p>Movie Title: " + resultData[0]["movieTitle"] + "</p>"+"<p>Rating: " + resultData[0]["rating"] + "</p>"+"<p>Director: " + resultData[0]["movieDirector"] + "</p>"+"<p>Year: " + resultData[0]["movieYear"] + "</p>"+"<p>ID: " + resultData[0]["movieId"] + "</p>";
-    starInfoElement.append(inf);
+    movieInfoElement.append(inf);
     let starTableBodyElement = jQuery("#star_table_body");
     
     for(let i=0;i < resultData.length;i++){
