@@ -8,6 +8,21 @@
 <!doctype html>
 <html lang="en">
 <head>
+<style>
+.button {
+  background-color: #87CEFA;
+  border: concrete;
+  color: white;
+  padding: 3px 5px;
+  text-align: center;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #87CEFA;
+}
+</style>
 
     <meta charset="utf-8">
     <meta name="viewport"
@@ -20,7 +35,7 @@
     <title>Single Star</title>
 </head>
 <body>
-<i><a href="movies.html">Back to movie list</a></i>
+<button class="button"><a href="movies.html">Back to movie list</a></button>
 <h1>Single Star Page</h1>
 
 
@@ -38,7 +53,7 @@
 
     <tbody id=movie_table_body></tbody>
 </table>
-<i><a href="movies.html">Back to movie list</a></i>
+<button class="button"><a href="movies.html">Back to movie list</a></button>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
