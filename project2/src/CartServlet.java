@@ -12,7 +12,7 @@ import java.util.Date;
  * This IndexServlet is declared in the web annotation below, 
  * which is mapped to the URL pattern /api/index.
  */
-@WebServlet(name = "IndexServlet", urlPatterns = "/api/cart")
+@WebServlet(name = "CartServlet", urlPatterns = "/api/cart")
 public class CartServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

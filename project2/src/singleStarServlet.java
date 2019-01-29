@@ -60,6 +60,15 @@ public class singleStarServlet extends HttpServlet {
 			ResultSet rs = statement.executeQuery();
 
 			JsonArray starArray = new JsonArray();
+			String title = request.getParameter("title");
+			String year = request.getParameter("year");
+			String director = request.getParameter("director");
+			String star = request.getParameter("star");
+			String sorting = request.getParameter("sorting");
+			String npp = request.getParameter("npp");
+			String page = request.getParameter("page");
+			String genre = request.getParameter("genre");
+			String st = request.getParameter("st");
 
 
 			while (rs.next()) {
@@ -83,6 +92,15 @@ public class singleStarServlet extends HttpServlet {
 				starObject.addProperty("movieTitle", movieTitle);
 				starObject.addProperty("movieYear", movieYear);
 				starObject.addProperty("movieDirector", movieDirector);
+				starObject.addProperty("urlTitle",title);
+				starObject.addProperty("urlYear",year);
+				starObject.addProperty("urlDirector",director);
+				starObject.addProperty("urlStar",star);
+				starObject.addProperty("npp",npp);
+				starObject.addProperty("sorting",sorting);
+				starObject.addProperty("page",page);
+				starObject.addProperty("genreWord",genre);
+				starObject.addProperty("st",st);
 
 				starArray.add(starObject);
 			}

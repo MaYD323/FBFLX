@@ -75,7 +75,7 @@ function handleStarResult(resultData) {
         rowHTML +=
             "<th>" +
 
-            '<a href="single-movie.html?id=' + resultData[i]['movieId'] + '">'
+            '<a href="single-movie.html?id=' + resultData[i]['movieId'] + "&title=" + title+"&year="+year+"&director="+director+"&star="+star+"&sorting="+sorting+"&npp="+npp+"&page="+page+"&genre="+genre+"&st="+st+'">'
             + resultData[i]["movieTitle"] +     
             '</a>' +
             "</th>";
@@ -85,7 +85,7 @@ function handleStarResult(resultData) {
         rowHTML += "<th>"
         for(let z=0;z<resultData[i]["stars"].length;z++)
         {
-        	rowHTML +='<a href="single-star.html?id=' + resultData[i]["stars"][z]["starId"] + '">'
+        	rowHTML +='<a href="single-star.html?id=' + resultData[i]["stars"][z]["starId"] +"&title=" + title+"&year="+year+"&director="+director+"&star="+star+"&sorting="+sorting+"&npp="+npp+"&page="+page+"&genre="+genre+"&st="+st+ '">'
             + resultData[i]["stars"][z]["name"] + 
             '</a>';
         	if(z!=resultData[i]["stars"].length-1)
