@@ -2,13 +2,13 @@
 
     This .html performs two steps:
     1. Create a html template skeleton, with all the elements defined (some left empty) and named with ids.
-    2. Load single-star.js to populate the data into empty elements.
+    2. Load index.js to populate the data into empty elements.
     -->
 
 <!doctype html>
 <html lang="en">
 <head>
-	<link rel="stylesheet" type="text/css" href="single-star.css">
+
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,35 +17,30 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Single Star</title>
+    <title>Star List</title>
 </head>
 <body>
-<button class="button"><a href="movies.html">Back to movie list</a></button>
-<h1>Single Star Page</h1>
 
 
-<h3 id="star_info"></h3>
-<table id=movie_table class="table table-striped">
+<h1>stars</h1>
+
+<table id=star_table class="table table-striped">
     <thead>
     <tr>
-        <th>Movie Title</th>
-        <th>Release Year</th>
-        <th>Director</th>
-        <th>
+        <th>Name</th>
+        <th>Birth Year</th>
     </tr>
     </thead>
-
-
-    <tbody id=movie_table_body></tbody>
+    <tbody id=star_table_body></tbody>
 </table>
-<button class="button"><a href="movies.html">Back to movie list</a></button>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 
-<script src="single-star.js"></script>
+<script src="star.js"></script>
 </body>
 
 
