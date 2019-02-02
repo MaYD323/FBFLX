@@ -1,44 +1,54 @@
-import com.google.gson.JsonObject;
+
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * This IndexServlet is declared in the web annotation below, 
- * which is mapped to the URL pattern /api/index.
+ * Servlet implementation class AddServlet
  */
-@WebServlet(name = "CartServlet", urlPatterns = "/api/cart")
+@WebServlet(name = "CartServlet", urlPatterns="/api/cart")
 public class CartServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = 1L;
+       
     /**
-     * handles POST requests to store session information
+     * @see HttpServlet#HttpServlet()
      */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession();
-        String sessionId = session.getId();
-        Long lastAccessTime = session.getLastAccessedTime();
-
-        JsonObject responseJsonObject = new JsonObject();
-        responseJsonObject.addProperty("sessionID", sessionId);
-        responseJsonObject.addProperty("lastAccessTime", new Date(lastAccessTime).toString());
-
-        // write all the data into the jsonObject
-        response.getWriter().write(responseJsonObject.toString());
+    public CartServlet() {
+        super();
+        // TODO Auto-generated constructor stub
     }
 
-    /**
-     * handles GET requests to add and show the item list information
-     */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String item = request.getParameter("item");
-        System.out.println(item);
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		String item = request.getParameter("item");
+        response.setContentType("application/json"); 
         HttpSession session = request.getSession();
+        JsonArray cartJsonArray = new JsonArray();
+        PrintWriter out = response.getWriter();
+        String loginUser = "CS122B";
+        String loginPasswd = "CS122B";
+        String loginUrl = "jdbc:mysql://localhost:3306/moviedb";
 
         // get the previous items in a ArrayList
         ArrayList<String> previousItems = (ArrayList<String>) session.getAttribute("previousItems");
@@ -53,7 +63,55 @@ public class CartServlet extends HttpServlet {
                 previousItems.add(item);
             }
         }
+        Map<String,Integer> l = new HashMap<String,Integer>();
+        for(String it:previousItems) {
+        	if(l.get(it)==null) {
+        		l.put(it,1);
+        	}
+        	else {
+        		int z = l.get(it)+1;
+        		l.replace(it,z);
+        	}
+        }
+        for(Map.Entry<String, Integer> entry:l.entrySet()) {
+        	String id = entry.getKey();
+        	int number = entry.getValue();
+        	String title = "";
+        	try {
+				Class.forName("com.mysql.jdbc.Driver").newInstance();
+	    		Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
 
-        response.getWriter().write(String.join(",", previousItems));
-    }
+	    		Statement statement = connection.createStatement();
+	    		String query = "SELECT M.title from movies M where M.id = \""+id+"\"";
+	    		ResultSet movieSet = statement.executeQuery(query);
+	    		while(movieSet.next())
+	    		{
+	    			title = movieSet.getString("title");
+	    		}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+        	JsonObject movie = new JsonObject();
+        	movie.addProperty("id",id);
+        	movie.addProperty("title",title);
+        	movie.addProperty("number",number);
+        	cartJsonArray.add(movie);
+        }
+
+        out.write(cartJsonArray.toString());
+
+        response.setStatus(200);
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
 }

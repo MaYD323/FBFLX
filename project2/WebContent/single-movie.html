@@ -20,6 +20,7 @@
 </head>
 <body>
 <button id="Back_Button">Back to movie list</button>
+<p><a href="cart.html">Cart</a></p>
 <h1>Single Movie Page</h1>
 
 <h3 id="movie_info"></h3>
@@ -48,7 +49,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 	<script src="single-movie.js"></script>
-	
+<iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
+<form id="add_form" method="post" action="./api/cart" target="dummyframe">
+</form>
 </body>
 
 

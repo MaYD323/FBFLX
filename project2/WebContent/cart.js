@@ -2,65 +2,68 @@
  * Handle the data returned by IndexServlet
  * @param resultDataString jsonObject, consists of session info
  */
-function handleSessionData(resultDataString) {
-    resultDataJson = JSON.parse(resultDataString);
+function handleLoginResult(resultDataString) {
+    window.location.replace("index.html");
+}
+function getParameterByName(target) {
 
-    console.log("handle session response");
-    console.log(resultDataJson);
-    console.log(resultDataJson["sessionID"]);
+    let url = window.location.href;
 
-    // show the session information 
-    $("#sessionID").text("Session ID: " + resultDataJson["sessionID"]);
-    $("#lastAccessTime").text("Last access time: " + resultDataJson["lastAccessTime"]);
+    target = target.replace(/[\[\]]/g, "\\$&");
+
+
+    let regex = new RegExp("[?&]" + target + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+
+
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-/**
- * Handle the items in item list 
- * @param resultDataString jsonObject, needs to be parsed to html 
- */
-function handleCartArray(resultDataString) {
-    const resultArray = resultDataString.split(",");
-    console.log(resultArray);
-    
-    // change it to html list
-    let res = "<ul>";
-    for(let i = 0; i < resultArray.length; i++) {
-        // each item will be in a bullet point
-        res += "<li>" + resultArray[i] + "</li>";   
+function handleResult(resultData) {
+
+
+    console.log("handleResult: populating cart form from resultData");
+
+
+    let movieTableBodyElement = jQuery("#cart");
+
+
+    for (let i = 0; i < resultData.length; i++) {
+    	if(resultData[i]["id"]!=(null) && resultData[i]["number"]!=(0)){
+	    	let rowHTML="<br><label><h3>"+resultData[i]["title"]+"</h3>    Quantity: </label>";
+	    	rowHTML+="<input type=\"number\" min=0 name=\""+resultData[i]["id"]+"\" value="+resultData[i]["number"]+">";
+	    	movieTableBodyElement.append(rowHTML);
+    	}
+
+
     }
-    res += "</ul>";
-    
-    // clear the old array and show the new array in the frontend
-    $("#item_list").html("");
-    $("#item_list").append(res);
+    movieTableBodyElement.append("<br><br><br><input type=\"submit\" value=\"Checkout\">");
 }
 
-/**
- * Submit form content with POST method
- * @param cartEvent
- */
-function handleCartInfo(cartEvent) {
-    console.log("submit cart form");
+function submitLoginForm(formSubmitEvent) {
+    console.log("submit login form");
     /**
      * When users click the submit button, the browser will not direct
      * users to the url defined in HTML form. Instead, it will call this
      * event handler when the event is triggered.
      */
-    cartEvent.preventDefault();
+    formSubmitEvent.preventDefault();
 
-    $.get(
-        "api/cart",
-        // Serialize the cart form to the data sent by POST request
-        $("#cart").serialize(),
-        (resultDataString) => handleCartArray(resultDataString)
+    $.post(
+        "api/checkout",
+        // Serialize the login form to the data sent by POST request
+        $("#cart_form").serialize(),
+        (resultDataString) => handleLoginResult(resultDataString)
     );
 }
 
-$.ajax({
-    type: "POST",
-    url: "api/index",
-    success: (resultDataString) => handleSessionData(resultDataString)
+// Bind the submit action of the form to a handler function
+$("#cart").submit((event) => submitLoginForm(event));
+jQuery.ajax({
+    dataType: "json",  
+    method: "GET",
+    url: "api/cart", 
+    success: (resultData) => handleResult(resultData)
 });
-
-// Bind the submit action of the form to a event handler function
-$("#cart").submit((event) => handleCartInfo(event));

@@ -28,6 +28,7 @@ function getParameterByName(target) {
 
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
+
 function handleStarResult(resultData) {
     console.log("handleStarResult: populating star table from resultData");
 
@@ -105,9 +106,9 @@ function handleStarResult(resultData) {
     		rowHTML+=", ";
     		}
         }
-        rowHTML += "</th>"
+        rowHTML += "</th>";
+        rowHTML += "<th>" + "<iframe width=\"0\" height=\"0\" border=\"0\" name=\"dummyframe\" id=\"dummyframe\"></iframe>"+"<form id=\"add_form"+resultData[i]["movieId"]+"\" method=\"post\" action=\"./api/cart\" target=\"dummyframe\"><input type=\"hidden\" name=\"item\" value="+resultData[i]["movieId"]+"><input type=\"submit\" value=\"add\"></form>" + "</th>";
         rowHTML += "</tr>";
-
         movieTableBodyElement.append(rowHTML);
         
         

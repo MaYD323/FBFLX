@@ -74,8 +74,9 @@ function handleResult(resultData) {
     $('#Back_Button').click(function() {
     	  window.location="movies.html?title=" + resultData[0]["urlTitle"]+"&year="+resultData[0]["urlYear"]+"&director="+resultData[0]["urlDirector"]+"&star="+resultData[0]["urlStar"]+"&sorting="+resultData[0]["sorting"]+"&npp="+resultData[0]["npp"]+"&page="+resultData[0]["page"]+"&genre="+resultData[0]["genreWord"]+"&st="+resultData[0]["st"];
     	});
-}
+    $('#add_form').append("<input type=\"hidden\" name=\"item\" value="+resultData[0]["movieId"]+"><input type=\"submit\" value=\"add\">");
 
+}
 
 
 let movieId = getParameterByName('id');
@@ -96,3 +97,4 @@ jQuery.ajax({
     url: "api/single-movie?id=" + movieId+"&title=" + title+"&year="+year+"&director="+director+"&star="+star+"&sorting="+sorting+"&npp="+npp+"&page="+page+"&genre="+genre+"&st="+st, 
     success: (resultData) => handleResult(resultData) 
 });
+
