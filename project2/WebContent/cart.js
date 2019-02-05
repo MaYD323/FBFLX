@@ -33,18 +33,24 @@ function handleResult(resultData) {
 
 
     let movieTableBodyElement = jQuery("#cart");
-
+    let count=0;
 
     for (let i = 0; i < resultData.length; i++) {
     	if(resultData[i]["id"]!=(null) && resultData[i]["number"]!=(0)){
 	    	let rowHTML="<br><label><h3>"+resultData[i]["title"]+"</h3>    Quantity: </label>";
 	    	rowHTML+="<input type=\"number\" min=0 name=\""+resultData[i]["id"]+"\" value="+resultData[i]["number"]+">";
 	    	movieTableBodyElement.append(rowHTML);
+	    	count+=1;
     	}
 
 
     }
-    movieTableBodyElement.append("<br><br><br><input type=\"submit\" value=\"Checkout\">");
+    if(count>0){
+    	movieTableBodyElement.append("<br><br><br><input type=\"submit\" value=\"Checkout\">");
+    }
+    else{
+    	movieTableBodyElement.append("<br><br><br><p>Nothing in cart</p><a href=\"index.html\"> back to index</a>");
+    }
 }
 function submitLoginForm(formSubmitEvent) {
     console.log("submit login form");
