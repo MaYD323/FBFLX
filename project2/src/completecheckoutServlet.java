@@ -102,7 +102,6 @@ public class completecheckoutServlet extends HttpServlet {
         			userId = CresultSet.getInt("id");
 
         		}
-        		userId = 2;
         		for(Map.Entry<String, Integer> entry:l.entrySet()) {
         			String movieId = entry.getKey();
             		int num = entry.getValue();
@@ -117,7 +116,7 @@ public class completecheckoutServlet extends HttpServlet {
 
 			JsonObject responseJsonObject = new JsonObject();
 			responseJsonObject.addProperty("status", "fail");
-            responseJsonObject.addProperty("message", "DB error "+userId);
+            responseJsonObject.addProperty("message", "DB error");
 			response.getWriter().write(responseJsonObject.toString());
 
 
@@ -137,7 +136,7 @@ public class completecheckoutServlet extends HttpServlet {
             // Login fails
             JsonObject responseJsonObject = new JsonObject();
             responseJsonObject.addProperty("status", "fail");
-            responseJsonObject.addProperty("message", "Transaction error"+card_num+first+last+sDate);
+            responseJsonObject.addProperty("message", "Transaction error");
             response.getWriter().write(responseJsonObject.toString());
         }
         } catch (Exception e) {
