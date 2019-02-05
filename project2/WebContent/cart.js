@@ -2,8 +2,13 @@
  * Handle the data returned by IndexServlet
  * @param resultDataString jsonObject, consists of session info
  */
-function handleLoginResult(resultDataString) {
-    window.location.replace("index.html");
+function handleSearchResult(resultDataString) {
+	let url="";
+	for(let i=0;i<resultDataString.length;i++){
+		url+="&"+resultDataString[i]["name"]+"="+resultDataString[i]["num"];
+	}
+	
+    window.location.replace("checkout.html?email="+resultDataString[0]["username"]+url);
 }
 function getParameterByName(target) {
 
@@ -41,7 +46,6 @@ function handleResult(resultData) {
     }
     movieTableBodyElement.append("<br><br><br><input type=\"submit\" value=\"Checkout\">");
 }
-
 function submitLoginForm(formSubmitEvent) {
     console.log("submit login form");
     /**
@@ -50,16 +54,13 @@ function submitLoginForm(formSubmitEvent) {
      * event handler when the event is triggered.
      */
     formSubmitEvent.preventDefault();
-
     $.post(
         "api/checkout",
         // Serialize the login form to the data sent by POST request
-        $("#cart_form").serialize(),
-        (resultDataString) => handleLoginResult(resultDataString)
+        $("#cart").serialize(),
+        (resultDataString) => handleSearchResult(resultDataString)
     );
 }
-
-// Bind the submit action of the form to a handler function
 $("#cart").submit((event) => submitLoginForm(event));
 jQuery.ajax({
     dataType: "json",  
