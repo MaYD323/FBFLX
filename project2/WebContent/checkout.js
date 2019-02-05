@@ -25,7 +25,7 @@ function handleLoginResult(resultDataString) {
     console.log(resultDataJson);
     console.log(resultDataJson["status"]);
     if (resultDataJson["status"] === "success") {
-        window.location.replace("index.html");
+        window.location.replace("congradulations.html");
     } else {
         console.log("show error message");
         console.log(resultDataJson["message"]);

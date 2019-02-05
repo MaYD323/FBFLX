@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 @WebServlet(name = "completecheckoutServelet",urlPatterns = "/api/completecheckout")
@@ -110,6 +111,10 @@ public class completecheckoutServlet extends HttpServlet {
             			String Squery = "insert into sales(customerId,movieId,saleDate) values("+userId+",\""+movieId+"\",curdate())";
             			Sstatement.executeUpdate(Squery);
             		}
+            		ArrayList<String> previousItems = new ArrayList<>();
+            		Map<String,Integer> el = new HashMap<String,Integer>();
+            		((HttpServletRequest) request).getSession().setAttribute("previousItems",previousItems);
+            		((HttpServletRequest) request).getSession().setAttribute("checkcart",el);
         		}
         		
         } catch (Exception e) {
