@@ -1,5 +1,3 @@
-package parse.parse;
-
 
 public class Star {
 

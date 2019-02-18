@@ -1,4 +1,3 @@
-package parse.parse;
 import java.util.*;
 public class Movie{
 	
