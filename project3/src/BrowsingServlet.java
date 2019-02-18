@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -49,14 +50,24 @@ public class BrowsingServlet extends HttpServlet {
         
         try {
         		Class.forName("com.mysql.jdbc.Driver").newInstance();
-
+//        		String Cquery = "SELECT id from customers where email = \""+email+"\"";
+//        		PreparedStatement statement12 = connection.prepareStatement(Cquery);
+//        		ResultSet CresultSet = statement12.executeQuery();
         		Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
 
-        		Statement statement = connection.createStatement();
-
+        		
+//        		Statement statement = connection.createStatement();
+//
+//        		String query = "SELECT * from genres";
+//
+//        		ResultSet genreSet = statement.executeQuery(query);
+        		
         		String query = "SELECT * from genres";
-
-        		ResultSet genreSet = statement.executeQuery(query);
+        		PreparedStatement statement = connection.prepareStatement(query);
+        		ResultSet genreSet = statement.executeQuery();
+        		
+        		
+        		
         		JsonArray genreArray = new JsonArray();
 
         		

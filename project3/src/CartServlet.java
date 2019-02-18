@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -80,10 +81,17 @@ public class CartServlet extends HttpServlet {
         	try {
 				Class.forName("com.mysql.jdbc.Driver").newInstance();
 	    		Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
-
-	    		Statement statement = connection.createStatement();
-	    		String query = "SELECT M.title from movies M where M.id = \""+id+"\"";
-	    		ResultSet movieSet = statement.executeQuery(query);
+	    		
+	    		
+//        		String query = "SELECT * from genres";
+//        		PreparedStatement statement = connection.prepareStatement(query);
+//        		ResultSet genreSet = statement.executeQuery();
+	    		
+	    		
+	    		String query = "SELECT M.title from movies M where M.id = ?";
+	    		PreparedStatement statement = connection.prepareStatement(query);
+	    		statement.setString(1, id);
+	    		ResultSet movieSet = statement.executeQuery();
 	    		while(movieSet.next())
 	    		{
 	    			title = movieSet.getString("title");

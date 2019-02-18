@@ -3,6 +3,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -74,7 +77,7 @@ public class LoginServlet extends HttpServlet {
          * This example only allows username/password to be anteater/123456
          * In real world projects, you should talk to the database to verify username/password
          */
-        if (username.equals(email) && password.equals(pwd)) {
+        if (new StrongPasswordEncryptor().checkPassword(password, pwd)) {
             // Login succeeds
             // Set this user into current session
             String sessionId = ((HttpServletRequest) request).getSession().getId();

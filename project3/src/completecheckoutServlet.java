@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.ParseException;
@@ -89,14 +90,21 @@ public class completecheckoutServlet extends HttpServlet {
             int userId = 0;
             try {
         		Class.forName("com.mysql.jdbc.Driver").newInstance();
-
         		
-        		Statement Cstatement = connection.createStatement();
-
-        		String Cquery = "SELECT id from customers where email = \""+email+"\"";
-
-        		ResultSet CresultSet = Cstatement.executeQuery(Cquery);
+//        		PreparedStatement statement = connection.prepareStatement(query);
+//        		statement.setString(1, username);
+//        		ResultSet rs = statement.executeQuery();
         		
+//        		Statement Cstatement = connection.createStatement();
+//
+//        		String Cquery = "SELECT id from customers where email = \""+email+"\"";
+//
+//        		ResultSet CresultSet = Cstatement.executeQuery(Cquery);
+        		
+        		String Cquery = "SELECT id from customers where email = ?";
+        		PreparedStatement statement12 = connection.prepareStatement(Cquery);
+        		statement12.setString(1, email);
+        		ResultSet CresultSet = statement12.executeQuery();
         		// add a row for every star result
         		while (CresultSet.next()) {
 
@@ -107,9 +115,18 @@ public class completecheckoutServlet extends HttpServlet {
         			String movieId = entry.getKey();
             		int num = entry.getValue();
             		for(int i=0;i<num;i++) {
-            			Statement Sstatement = connection.createStatement();
-            			String Squery = "insert into sales(customerId,movieId,saleDate) values("+userId+",\""+movieId+"\",curdate())";
-            			Sstatement.executeUpdate(Squery);
+            			String query1 = "insert into sales(customerId,movieId,saleDate) values(?, ?,curdate());";
+            			PreparedStatement statement1 = connection.prepareStatement(query1);
+            			statement1.setInt(1, userId);
+            			statement1.setString(2, movieId);
+            			statement1.executeUpdate();
+            			
+//            			Statement Sstatement = connection.createStatement();
+//            			String Squery = "insert into sales(customerId,movieId,saleDate) values("+userId+",\""+movieId+"\",curdate())";
+//            			Sstatement.executeUpdate(Squery);
+            			
+            			
+    
             		}
             		ArrayList<String> previousItems = new ArrayList<>();
             		Map<String,Integer> el = new HashMap<String,Integer>();

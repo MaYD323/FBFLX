@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -59,8 +60,6 @@ public class MovieServlet extends HttpServlet {
 
         		Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
 
-        		Statement statement = connection.createStatement();
-        		Statement countStatement = connection.createStatement();
         		String tableQuery = "SELECT M.title, M.director, M.year, M.id, rating from movies M, ratings R";
         		String selectQuery = " where M.id = R.movieId";
         		String countQuery = "SELECT COUNT(*) as ct from movies M, ratings R";
@@ -104,9 +103,19 @@ public class MovieServlet extends HttpServlet {
         		pageQuery+=Integer.parseInt(npp)*(Integer.parseInt(page)-1);
         		countQuery += selectQuery;
         		selectQuery+=pageQuery;
+        		
+
         		String query = tableQuery+selectQuery;
-        		ResultSet countSet = countStatement.executeQuery(countQuery);
-        		ResultSet movieSet = statement.executeQuery(query);
+        		
+        		
+				
+				PreparedStatement countStatement = connection.prepareStatement(countQuery);
+				PreparedStatement statement = connection.prepareStatement(query);
+				
+				ResultSet countSet = countStatement.executeQuery();
+				ResultSet movieSet = statement.executeQuery();
+//        		ResultSet countSet = countStatement.executeQuery(countQuery);
+//        		ResultSet movieSet = statement.executeQuery(query);
         		JsonArray movieArray = new JsonArray();
         		int count = 0;
         		while(countSet.next())
@@ -130,9 +139,13 @@ public class MovieServlet extends HttpServlet {
                     movieObject.addProperty("movieYear", movieYear);
                     movieObject.addProperty("movieDirector", movieDirector);
                     movieObject.addProperty("movieRating", movieRating);
-        			String starQuery = "select S.name, S.id from stars_in_movies SIM, stars S where SIM.movieId = \'"+movieId+"\' AND SIM.starId = S.id";
-        			Statement starStatement = connection.createStatement();
-        			ResultSet starSet = starStatement.executeQuery(starQuery);
+//        			String starQuery = "select S.name, S.id from stars_in_movies SIM, stars S where SIM.movieId = \'"+movieId+"\' AND SIM.starId = S.id";
+//        			Statement starStatement = connection.createStatement();
+//        			ResultSet starSet = starStatement.executeQuery(starQuery);
+                    String starQuery = "select S.name, S.id from stars_in_movies SIM, stars S where SIM.movieId = ? AND SIM.starId = S.id";
+    				PreparedStatement starStatement = connection.prepareStatement(starQuery);
+    				starStatement.setString(1, movieId);
+    				ResultSet starSet = starStatement.executeQuery();
 
         			JsonArray starArray = new JsonArray();
         			while(starSet.next())
@@ -149,9 +162,14 @@ public class MovieServlet extends HttpServlet {
 
         			starSet.close();
         			starStatement.close();
-        			String genreQuery = "select G.name from genres_in_movies GIM, genres G where GIM.movieId = \'"+movieId+"\' AND GIM.genreId = G.id";
-        			Statement genreStatement = connection.createStatement();
-        			ResultSet genreSet = genreStatement.executeQuery(genreQuery);
+//        			String genreQuery = "select G.name from genres_in_movies GIM, genres G where GIM.movieId = \'"+movieId+"\' AND GIM.genreId = G.id";
+//        			Statement genreStatement = connection.createStatement();
+//        			ResultSet genreSet = genreStatement.executeQuery(genreQuery);
+        			
+        			String genreQuery = "select G.name from genres_in_movies GIM, genres G where GIM.movieId = ? AND GIM.genreId = G.id";
+    				PreparedStatement genreStatement = connection.prepareStatement(genreQuery);
+    				genreStatement.setString(1, movieId);
+    				ResultSet genreSet = genreStatement.executeQuery();
 
         			JsonArray genreArray = new JsonArray();
         			while(genreSet.next())
