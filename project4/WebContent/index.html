@@ -1,0 +1,37 @@
+<!-- This page will be seen if you logged in -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>Fablix</title>
+    <!-- Using jQuery -->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+    <!-- include jquery autocomplete JS  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.4.7/jquery.autocomplete.min.js"></script>
+
+    <!-- Bootstrap for CSS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Welcome to Fablix!</h1>
+<p><a href="cart.html">Cart</a></p>
+<h2><a href="search.html">Search Page</a></h2>
+<h2><a href="browsing.html">Browsing Page</a></h2>
+<h2><a href="dashboard.html">Dashboard Page</a></h2>
+<div class="container">
+ <input type="text" name="title" id="autocomplete" 
+    class="autocomplete-searchbox form-control" 
+    placeholder="Search Movie Title"/>
+    <INPUT id = "search" TYPE="SUBMIT" VALUE="Search" class = "button">
+</div>
+
+<!-- include your own JS file -->
+<script type='text/javascript' src='index.js'></script>
+</body>
+</html>

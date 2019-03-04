@@ -1,0 +1,58 @@
+<!-- This page will be seen if you logged in -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insertion</title>
+</head>
+<body>
+Inserting a new star
+<form id="add_star" method="post" action="#">
+    <label><b>Star Name</b></label>
+    <input type="text" placeholder="Enter star name" name="name">
+    <br>
+    <label><b>birth year</b></label>
+    <input type="text" placeholder="Enter birth year" name="birth">
+    <br>
+    <input type="submit" value="Insert">
+</form>
+
+<form id="add_movie" method="post" action="#">
+    <label><b>movie Name*</b></label>
+    <input type="text" placeholder="Enter movie name" name="movie_name">
+    <br>
+    <label><b>movie year*</b></label>
+    <input type="text" placeholder="Enter movie year" name="movie_year" >
+    <br>
+    <label><b>movie director*</b></label>
+    <input type="text" placeholder="Enter movie director" name="movie_director" >
+    <br>
+    <label><b>movie star*</b></label>
+    <input type="text" placeholder="Enter movie star" name="movie_star" >
+    <br>
+    <label><b>movie star birth year</b></label>
+    <input type="text" placeholder="Enter movie star" name="movie_star_birth" >
+    <br>
+    <label><b>movie genre*</b></label>
+    <input type="text" placeholder="Enter movie genre" name="movie_genre" >
+    <br>
+    <input type="submit" value="Insert">
+</form>
+
+<div id="resul-message"></div>
+<table id=item_list class="table table-striped">
+	<thead>
+	<tr>
+		<td>TableName</td>
+		<td>ColumnName</td>
+		<td>Data Type</td>
+	</tr>
+	</thead>
+
+    <tbody id=item_list_body></tbody>
+</table>
+<!-- include your own JS file -->
+<script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
+<script type='text/javascript' src='makechange.js'></script>
+</body>
+</html>
