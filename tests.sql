@@ -70,10 +70,6 @@ DELIMITER ;
 
 -- ************************************************************** --  
 
-
-
--- SELECT * from movies where title="zkding";
-
 -- SELECT * from genres_in_movies where movieId="tt0499471";
 
 -- SELECT * from stars where id="nm9423081";
