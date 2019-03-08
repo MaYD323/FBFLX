@@ -28,21 +28,25 @@ public class LoginServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // getting started with reCAPTCHA
-        PrintWriter out = response.getWriter();
-
-        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-        System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
-
-        // Verify reCAPTCHA
-        try {
-            RecaptchaVerifyUtils.verify(gRecaptchaResponse);
-        } catch (Exception e) {
-       	    JsonObject responseJsonObject = new JsonObject();
-            responseJsonObject.addProperty("message", e.getMessage());
-            response.getWriter().write(responseJsonObject.toString());
-            return;
-        }
-        // ending with started with reCAPTCHA
+    	String userAgent = request.getHeader("User-Agent");
+    	
+    	if (userAgent != null && !userAgent.contains("Android")) {
+	        PrintWriter out = response.getWriter();
+	
+	        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+	        System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
+	
+	        // Verify reCAPTCHA
+	        try {
+	            RecaptchaVerifyUtils.verify(gRecaptchaResponse);
+	        } catch (Exception e) {
+	       	    JsonObject responseJsonObject = new JsonObject();
+	            responseJsonObject.addProperty("message", e.getMessage());
+	            response.getWriter().write(responseJsonObject.toString());
+	            return;
+	        }
+	        // ending with started with reCAPTCHA
+    	}
         
         String username = request.getParameter("username");
         String password = request.getParameter("password");
