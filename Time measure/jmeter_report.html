@@ -1,0 +1,116 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    background-color: linen;
+}
+
+td {
+    border-top-style: solid;
+}
+</style>
+</head>
+<body>
+
+<table style="width:100%">
+  <tr style="font-weight:bold; background-color: orange">
+    <td width="300px">Single-instance version cases</td>
+    <td>Graph Results Screenshot</td>
+    <td>Average Query Time(ms)</td>
+    <td>Average Search Servlet Time(ms)</td>
+    <td>Average JDBC Time(ms)</td>
+    <td>Analysis</td>
+  </tr>
+  <tr>
+    <td>Case 1: HTTP/1 thread</td>
+    <td><img src="1.3/1.3.png" alt="Graph Results Screenshot Case 1" style="width:304px;height:228px;"></td>
+    <td>127</td>
+    <td>18.27</td>
+    <td>18.18</td>
+    <td>It take less time compare to 10 thread, less user less time to process</td>
+  </tr>
+  <tr>
+    <td>Case 2: HTTP/10 threads</td>
+    <td><img src="1.4/1.4.png" alt="Graph Results Screenshot Case 2" style="width:304px;height:228px;"></td>
+    <td>130</td>
+    <td>65.37</td>
+    <td>65.32</td>
+    <td>10 threads would take longer to process from 1threads</td>
+  </tr>
+  <tr>
+    <td>Case 3: HTTPS/10 threads</td>
+    <td><img src="1.5/1.5.png" alt="Graph Results Screenshot Case 3" style="width:304px;height:228px;"></td>
+    <td>131</td>
+    <td>65.31</td>
+    <td>65.21</td>
+    <td>HTTPS could take longer to process compare to HTTP, but for here it is not making a much difference</td>
+  </tr>
+  <tr>
+    <td>Case 4: HTTP/10 threads/No prepared statements</td>
+    <td><img src="1.1/1.1.png" alt="Graph Results Screenshot Case 4" style="width:304px;height:228px;"></td>
+    <td>131</td>
+    <td>37.29</td>
+    <td>37.23</td>
+    <td>prepared statement is not effecting much on the performace since we construct 1 statement, but not resuing the structure many times</td>
+  </tr>
+  <tr>
+    <td>Case 5: HTTP/10 threads/No connection pooling</td>
+    <td><img src="1.2/1.2.png" alt="Graph Results Screenshot Case 4" style="width:304px;height:228px;"></td>
+    <td>127</td>
+    <td>75.25</td>
+    <td>71.41</td>
+    <td>No connection pooling is costing us much time on the process, the difference is clear</td>
+  </tr>
+
+</table> 
+
+
+<table style="width:100%">
+  <tr style="font-weight:bold; background-color: orange">
+    <td width="300px">Scaled version cases</td>
+    <td>Graph Results Screenshot</td>
+    <td>Average Query Time(ms)</td>
+    <td>Average Search Servlet Time(ms)</td>
+    <td>Average JDBC Time(ms)</td>
+    <td>Analysis</td>
+  </tr>
+  <tr>
+    <td>Case 1: HTTP/1 thread</td>
+    <td><img src="2.3/2.3.png" alt="Graph Results Screenshot Case 1" style="width:304px;height:228px;"></td>
+    <td>99</td>
+    <td>14.44</td>
+    <td>14.38</td>
+    <td>1 thread does not take much time to process</td>
+
+  </tr>
+  <tr>
+    <td>Case 2: HTTP/10 threads</td>
+    <td><img src="2.4/2.4.png" alt="Graph Results Screenshot Case 2" style="width:304px;height:228px;"></td>
+
+    <td>99</td>
+    <td>31.44</td>
+    <td>31.37</td>
+    <td>As always 10 thread is taking more time than 1 thread</td>
+  </tr>
+  <tr>
+    <td>Case 3: HTTP/10 threads/No prepared statements</td>
+    <td><img src="2.1/2.1.png" alt="Graph Results Screenshot Case 4" style="width:304px;height:228px;"></td>
+    <td>177</td>
+    <td>17.66</td>
+    <td>17.60</td>
+    <td>No prepared statement did not effect much on the big picture</td>
+  </tr>
+  <tr>
+    <td>Case 4: HTTP/10 threads/No connection pooling</td>
+    <td><img src="2.2/2.2.png" alt="Graph Results Screenshot Case 4" style="width:304px;height:228px;"></td>
+    <td>95</td>
+    <td>30.38</td>
+    <td>27.00</td>
+    <td>No connection pooling is a big deal as we can see here</td>
+  </tr>
+
+</table> 
+
+</body>
+</html>
