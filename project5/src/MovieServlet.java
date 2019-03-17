@@ -1,7 +1,10 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -53,6 +56,10 @@ public class MovieServlet extends HttpServlet {
 //        String loginUser = "CS122B";
 //        String loginPasswd = "CS122B";
 //        String loginUrl = "jdbc:mysql://localhost:3306/moviedb";
+		long TS = 0;
+    	long TJ = 0;
+    	long TimeS = System.nanoTime();
+		
         response.setContentType("application/json"); 
 		String title = request.getParameter("title");
 		String year = request.getParameter("year");
@@ -72,7 +79,7 @@ public class MovieServlet extends HttpServlet {
 //
 //        		Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
 	        	Context initCtx = new InitialContext();
-	
+	        	long TimeJ = System.nanoTime();
 	            Context envCtx = (Context) initCtx.lookup("java:comp/env");
 	            if (envCtx == null)
 	                out.println("envCtx is NULL");
@@ -291,16 +298,39 @@ public class MovieServlet extends HttpServlet {
         		movieSet.close();
         		statement.close();
         		connection.close();
+        		TJ = System.nanoTime() - TimeJ;
         		
         } catch (Exception e) {
 
 			JsonObject jsonObject = new JsonObject();
 			jsonObject.addProperty("errorMessage", e.getMessage());
 			out.write(jsonObject.toString());
+			response.setStatus(500);
 
 
 			response.setStatus(500);
         }
+        TS = System.nanoTime()-TimeS;
+        try {
+     		FileOutputStream logJ = new FileOutputStream("/home/ubuntu/TJ.txt" , true);
+    		
+    		PrintStream printerJ = new PrintStream(logJ);
+    		
+    		FileOutputStream logS = new FileOutputStream("/home/ubuntu/TS.txt", true);
+    		
+    		PrintStream printerS = new PrintStream(logS);
+        	 
+    		printerJ.println(TJ);
+    		printerS.println(TS);
+    		printerJ.close();
+    		printerS.close();
+ 
+        	 
+        	 
+         }catch (Exception e) {
+        	 System.out.println(e);
+         }
+        
 
         
 	}
